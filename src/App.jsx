@@ -6,11 +6,12 @@ import HomePage from "./pages/Home";
 import AboutPage from "./pages/About";
 import ArticlesListPage from "./pages/ArticlesList";
 import ArticlePage from "./pages/Article";
+import NavBar from "./NavBar";
 
 function App() {
   return (
     <div className="App">
-      <h1>My Awesome Blog</h1>
+      <NavBar />
       <div id="page-body">
         <Routes>
           <Route path="/" element={<HomePage />} />
