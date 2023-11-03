@@ -9,6 +9,8 @@ const ArticlePage = () => {
   return (
     <>
       <h1>{article?.title}</h1>
+      {/* ? key arg corresponds to index */}
+      {/* Don't use index if the list items will be added to or removed */}
       {article?.content.map((paragraph, key) => (
         <p key={key}>{paragraph}</p>
       ))}
