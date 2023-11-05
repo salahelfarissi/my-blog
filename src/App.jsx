@@ -6,6 +6,7 @@ import HomePage from "./pages/Home";
 import AboutPage from "./pages/About";
 import ArticlesListPage from "./pages/ArticlesList";
 import ArticlePage from "./pages/Article";
+import NotFoundPage from "./pages/NotFound";
 import NavBar from "./NavBar";
 
 function App() {
@@ -20,6 +21,9 @@ function App() {
 
           {/* ? This is a URL paramater :articleId */}
           <Route path="/articles/:articleId" element={<ArticlePage />} />
+
+          {/* Add route to not found page*/}
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </div>
     </div>
