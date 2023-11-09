@@ -43,16 +43,36 @@ app.put("/api/articles/:name/upvote", async (req, res) => {
     );
     const updatedArticle = await db.collection("articles").findOne({ name });
     res.status(200).send(`${name} now has ${updatedArticle.upvotes} upvotes`);
+  } else {
+    res.status(404).send("Article not found");
   }
 });
 
-app.post("/api/articles/:name/comments", (req, res) => {
+app.post("/api/articles/:name/comments", async (req, res) => {
   const { postedBy, text } = req.body;
   const { name } = req.params;
-  const article = articlesInfo.find((article) => article.name === name);
+
+  const client = new MongoClient("mongodb://127.0.0.1:27017");
+  await client.connect();
+
+  const db = client.db("react-blog-db");
+
+  const article = await db.collection("articles").findOne({ name });
+
   if (article) {
-    article.comments.push({ postedBy, text });
-    res.status(200).send(article.comments);
+    await db.collection("articles").updateOne(
+      { name },
+      {
+        $push: {
+          comments: {
+            postedBy,
+            text,
+          },
+        },
+      }
+    );
+    const updatedArticle = await db.collection("articles").findOne({ name });
+    res.status(200).json(updatedArticle);
   } else {
     res.status(404).send("Article not found");
   }
