@@ -32,7 +32,8 @@ app.put("/api/articles/:name/upvote", async (req, res) => {
       }
     );
     const updatedArticle = await db.collection("articles").findOne({ name });
-    res.status(200).send(`${name} now has ${updatedArticle.upvotes} upvotes`);
+    // Send the updated article object as response
+    res.status(200).json(updatedArticle);
   } else {
     res.status(404).send("Article not found");
   }
