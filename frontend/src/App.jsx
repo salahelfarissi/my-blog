@@ -8,6 +8,8 @@ import ArticlesListPage from "./pages/ArticlesList";
 import ArticlePage from "./pages/Article";
 import NotFoundPage from "./pages/NotFound";
 import NavBar from "./NavBar";
+import LoginPage from "./pages/Login";
+import CreateAccountPage from "./pages/CreateAccount";
 
 function App() {
   return (
@@ -21,6 +23,9 @@ function App() {
 
           {/* ? This is a URL paramater :articleId */}
           <Route path="/articles/:articleId" element={<ArticlePage />} />
+
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/create-account" element={<CreateAccountPage />} />
 
           {/* Add route to not found page*/}
           <Route path="*" element={<NotFoundPage />} />

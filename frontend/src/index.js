@@ -1,10 +1,21 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { initializeApp } from "firebase/app";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+const firebaseConfig = {
+  apiKey: "AIzaSyBvYtRIYtp-07TVUh1PQMnkcSc3UtgiRQM",
+  authDomain: "my-react-blog-5054e.firebaseapp.com",
+  projectId: "my-react-blog-5054e",
+  storageBucket: "my-react-blog-5054e.appspot.com",
+  messagingSenderId: "654778152866",
+  appId: "1:654778152866:web:f1db18078cbfafad4464fb",
+};
+
+const app = initializeApp(firebaseConfig);
 
 const router = createBrowserRouter([
   {
