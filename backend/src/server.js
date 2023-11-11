@@ -3,6 +3,7 @@ import express from "express";
 import { db, connectToDb } from "./db.js";
 import admin from "firebase-admin";
 import path from "path";
+import "dotenv/config";
 
 import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
