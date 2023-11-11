@@ -13,10 +13,10 @@ const app = express();
 app.use(express.json());
 
 app.use(async (req, res, next) => {
-  const { authToken } = req.headers;
-  if (authToken) {
+  const { authtoken } = req.headers;
+  if (authtoken) {
     try {
-      req.user = await admin.auth().verifyIdToken(authToken);
+      req.user = await admin.auth().verifyIdToken(authtoken);
     } catch (error) {
       return res.sendStatus(400);
     }
@@ -85,24 +85,19 @@ app.post("/api/articles/:name/comments", async (req, res) => {
   const { name } = req.params;
   const { email } = req.user;
 
+  await db.collection("articles").updateOne(
+    { name },
+    {
+      $push: { comments: { postedBy: email, text } },
+    }
+  );
+
   const article = await db.collection("articles").findOne({ name });
 
   if (article) {
-    await db.collection("articles").updateOne(
-      { name },
-      {
-        $push: {
-          comments: {
-            postedBy: email,
-            text,
-          },
-        },
-      }
-    );
-    const updatedArticle = await db.collection("articles").findOne({ name });
-    res.status(200).json(updatedArticle);
+    res.status(200).json(article);
   } else {
-    res.status(404).send("Article not found");
+    res.status(404).send("That article doesn't exist!");
   }
 });
 
