@@ -13,20 +13,28 @@ const ArticlePage = () => {
   const { user } = useUser();
 
   useEffect(() => {
-    const fetchData = async () => {
-      const result = await axios.get(`/api/articles/${articleId}`);
+    const loadArticleInfo = async () => {
+      const token = user && (await user.getIdToken());
+      const headers = token ? { authToken: token } : {};
+      const result = await axios.get(`/api/articles/${articleId}`, {
+        headers,
+      });
       const body = result.data;
 
       setArticleInfo(body);
     };
 
-    fetchData();
-  }, [articleId]);
+    loadArticleInfo();
+  }, [articleId, user]);
 
   const article = articles.find((article) => article.name === articleId);
 
   const addUpvote = async () => {
-    const result = await axios.put(`/api/articles/${articleId}/upvote`);
+    const token = user && (await user.getIdToken());
+    const headers = token ? { authToken: token } : {};
+    const result = await axios.put(`/api/articles/${articleId}/upvote`, null, {
+      headers,
+    });
     const body = result.data;
 
     setArticleInfo(body);
