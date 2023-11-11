@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import NotFoundPage from "./NotFound";
 import articles from "./article-content";
@@ -16,6 +16,7 @@ const ArticlePage = () => {
   const { canUpvote } = articleInfo;
   const { articleId } = useParams();
   const { user, loading } = useUser();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const loadArticleInfo = async () => {
@@ -56,7 +57,7 @@ const ArticlePage = () => {
             {canUpvote ? "Upvote" : "Already upvoted"}
           </button>
         ) : (
-          <button>Log in to upvote</button>
+          <button onClick={() => navigate("/login")}>Log in to upvote</button>
         )}
         <p>This article has {articleInfo.upvotes} upvote(s).</p>
       </div>
